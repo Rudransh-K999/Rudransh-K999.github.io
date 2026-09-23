@@ -1,14 +1,929 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>The Ruverse @2026</title>
-    <script type="module" crossorigin src="./assets/index-B7Ba-2BY.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-jjEbMtc8.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruverse — Rudransh Portfolio</title>
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           CSS STYLES — BLACK & PURPLE THEME
+           ========================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Hide native cursor for custom cursor */
+        }
 
+        :root {
+            --bg-color: #0a0a0f;
+            --text-light: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --grid-color: rgba(138, 43, 226, 0.15);
+            --purple: #8A2BE2;
+            --purple-glow: rgba(138, 43, 226, 0.4);
+            --card-bg: #15151a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* =========================================
+           CUSTOM CURSOR (Provided Code Integrated)
+           ========================================= */
+        .circle {
+            --circle-size: 40px;
+            position: fixed;
+            height: var(--circle-size);
+            width: var(--circle-size);
+            border: 2px solid var(--purple); /* Themed to purple */
+            border-radius: 100%;
+            top: calc(var(--circle-size) / 2 * -1);
+            left: calc(var(--circle-size) / 2 * -1);
+            pointer-events: none;
+            z-index: 9999;
+            transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.3); /* Purple glow */
+        }
+
+        .circle.hovered {
+            background-color: rgba(138, 43, 226, 0.1);
+            border-color: #ffffff;
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.6);
+        }
+
+        /* --- Layout --- */
+        .hero-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 40px;
+            overflow: hidden;
+        }
+
+        /* Background Text */
+        .background-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 25vw;
+            font-weight: 900;
+            color: rgba(138, 43, 226, 0.07);
+            z-index: 1;
+            white-space: nowrap;
+            letter-spacing: -0.05em;
+            pointer-events: none;
+            transition: transform 0.1s ease-out, opacity 0.5s ease;
+        }
+
+        /* Grid Overlay */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 10vw 10vw;
+            background-position: center center;
+        }
+
+        .grid-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+            background-size: 10vw 10vw;
+            background-position: center center;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--grid-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .logo sup {
+            font-size: 0.8rem;
+            color: var(--purple);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--text-light);
+        }
+
+        .nav-links li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--purple);
+            box-shadow: 0 0 10px var(--purple);
+        }
+
+        .count {
+            font-size: 0.6rem;
+            vertical-align: super;
+            opacity: 0.7;
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: none;
+            z-index: 20;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 2px;
+            background-color: var(--text-light);
+            transition: 0.3s ease;
+        }
+
+        /* --- Tab Content System --- */
+        .tab-content {
+            position: absolute;
+            top: 100px; /* Below navbar */
+            left: 0;
+            width: 100%;
+            height: calc(100% - 120px);
+            padding: 0 40px;
+            z-index: 5;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+        }
+
+        .tab-content.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* --- Home Tab Specifics (Exact Layout Match) --- */
+        #home-tab {
+            padding: 0; /* Reset padding for exact hero layout */
+            top: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none; /* Allow clicks to pass through to empty space, enable on children */
+        }
+        
+        #home-tab.active {
+            pointer-events: auto;
+        }
+
+        .home-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .intro-text {
+            position: absolute;
+            top: 25%;
+            left: 40px;
+            z-index: 10;
+            max-width: 250px;
+        }
+
+        .intro-text p {
+            font-size: 0.75rem;
+            line-height: 1.6;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .hero-image-placeholder {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 90%;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            pointer-events: none;
+            transition: transform 0.1s ease-out;
+        }
+
+        .hero-image {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: bottom;
+            filter: drop-shadow(0 20px 40px rgba(138, 43, 226, 0.3));
+        }
+
+        .project-card {
+            position: absolute;
+            right: 15%;
+            top: 35%;
+            z-index: 10;
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            padding: 15px;
+            border-radius: 6px;
+            width: 160px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: transform 0.1s ease-out;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-icon {
+            font-size: 1.2rem;
+            color: var(--purple);
+        }
+
+        .project-info h4 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .project-info p {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .bottom-left {
+            position: absolute;
+            bottom: 30px;
+            left: 40px;
+            z-index: 10;
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .main-name {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: var(--text-light);
+        }
+
+        .contact-widget {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            z-index: 10;
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            border-radius: 6px;
+            width: 260px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(138, 43, 226, 0.3);
+            transition: transform 0.1s ease-out;
+        }
+
+        .widget-header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .widget-body {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--purple);
+        }
+
+        .widget-text {
+            flex-grow: 1;
+        }
+
+        .widget-text h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .widget-text p {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        .arrow-btn {
+            background-color: var(--purple);
+            color: var(--text-light);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .arrow-btn:hover {
+            background-color: #9b4dff;
+            transform: scale(1.1);
+        }
+
+        /* --- Generic Tab Layouts --- */
+        .tab-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .tab-title span {
+            color: var(--purple);
+        }
+
+        .tab-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* About Tab */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        /* Work Tab */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .work-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .work-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.2);
+            border-color: var(--purple);
+        }
+
+        .work-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+        }
+
+        .work-info {
+            padding: 20px;
+        }
+
+        .work-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .work-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Services Tab */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .service-item:hover {
+            background: rgba(138, 43, 226, 0.1);
+            border-color: var(--purple);
+        }
+
+        .service-item h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .service-item p {
+            color: var(--text-muted);
+            max-width: 400px;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Tab */
+        .contact-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100%;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--purple);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+        }
+
+        .contact-btn:hover {
+            background: #9b4dff;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--purple-glow);
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 1024px) {
+            .main-name { font-size: 6rem; }
+            .background-text { font-size: 30vw; }
+            .project-card { right: 10%; }
+            .about-grid { grid-template-columns: 1fr; }
+            .tab-title { font-size: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .main-name { font-size: 4rem; }
+            .background-text { font-size: 35vw; }
+            .intro-text { top: 20%; left: 20px; }
+            .hero-image-placeholder { width: 100%; }
+            .project-card { display: none; }
+            .contact-widget { right: 20px; width: 220px; }
+            .bottom-left { left: 20px; }
+            .hero-container { padding: 20px; }
+            .tab-content { padding: 0 20px; }
+            .tab-title { font-size: 2.5rem; }
+            .service-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Custom Cursor Element -->
+    <div class="circle"></div>
+
+    <div class="hero-container">
+        <!-- Background Elements (Persistent across tabs) -->
+        <div class="background-text" id="bgText">RUDRANSH</div>
+        <div class="grid-overlay"></div>
+
+        <!-- Navigation -->
+        <nav class="navbar">
+            <a href="#" class="logo" onclick="switchTab('home')">Ruverse<sup>©</sup></a>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-tab="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-tab="about">About</a></li>
+                <li><a href="#" class="nav-link" data-tab="work">Work <span class="count">(12)</span></a></li>
+                <li><a href="#" class="nav-link" data-tab="services">Services <span class="count">(05)</span></a></li>
+                <li><a href="#" class="nav-link" data-tab="contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <!-- ================= TAB CONTENT ================= -->
+
+        <!-- HOME TAB (Exact Layout Match) -->
+        <div id="home-tab" class="tab-content active">
+            <div class="home-elements">
+                <div class="intro-text">
+                    <p>I DESIGN USER-CENTERED DIGITAL EXPERIENCES THAT ARE SIMPLE SMART AND IMPACTFUL</p>
+                </div>
+
+                <div class="hero-image-placeholder" id="heroImage">
+                    <img src="https://i.postimg.cc/9Xx5jhFV/Gemini-Generated-Image-clean-removebg-preview.png" alt="Rudransh" class="hero-image">
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1585504198199-20277593b94f?q=80&w=200&auto=format&fit=crop" alt="Nexus Project">
+                    </div>
+                    <div class="project-info">
+                        <span class="project-icon">✺</span>
+                        <div>
+                            <h4>NEXUS</h4>
+                            <p>/Web Design</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-left">
+                    <p class="copyright">©2026</p>
+                    <h1 class="main-name">RUDRANSH</h1>
+                </div>
+
+                <div class="contact-widget">
+                    <div class="widget-header">
+                        <span>Let's Talk</span>
+                        <span class="widget-icon" style="color: var(--purple);">✺</span>
+                    </div>
+                    <div class="widget-body">
+                        <img src="https://i.postimg.cc/9Xx5jhFV/Gemini-Generated-Image-clean-removebg-preview.png" alt="Rudransh Avatar" class="avatar" style="object-position: top;">
+                        <div class="widget-text">
+                            <h4>Rudransh</h4>
+                            <p>UI/UX Designer</p>
+                        </div>
+                        <button class="arrow-btn" onclick="switchTab('contact')">↗</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT TAB -->
+        <div id="about-tab" class="tab-content">
+            <h2 class="tab-title">About <span>Me</span></h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>Hello! I'm Rudransh, a passionate UI/UX designer dedicated to crafting digital experiences that are not only visually stunning but also highly functional and user-friendly.</p>
+                    <p>With a keen eye for detail and a love for problem-solving, I transform complex ideas into intuitive interfaces. My goal is to bridge the gap between aesthetics and usability, ensuring every interaction feels seamless and impactful.</p>
+                    <p>When I'm not designing, you can find me exploring new technologies, sketching concepts, or diving into creative side projects.</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?q=80&w=800&auto=format&fit=crop" alt="Workspace">
+                </div>
+            </div>
+        </div>
+
+        <!-- WORK TAB -->
+        <div id="work-tab" class="tab-content">
+            <h2 class="tab-title">Selected <span>Works</span></h2>
+            <div class="work-grid">
+                <div class="work-card">
+                    <img src="https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=600&auto=format&fit=crop" alt="Project 1">
+                    <div class="work-info">
+                        <h3>Zentix Dashboard</h3>
+                        <p>UI/UX Design</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop" alt="Project 2">
+                    <div class="work-info">
+                        <h3>FinTech App</h3>
+                        <p>Mobile Design</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop" alt="Project 3">
+                    <div class="work-info">
+                        <h3>E-Commerce Platform</h3>
+                        <p>Web Design</p>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=600&auto=format&fit=crop" alt="Project 4">
+                    <div class="work-info">
+                        <h3>Brand Identity</h3>
+                        <p>Visual Design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SERVICES TAB -->
+        <div id="services-tab" class="tab-content">
+            <h2 class="tab-title">My <span>Services</span></h2>
+            <div class="services-list">
+                <div class="service-item">
+                    <h3>UI/UX Design</h3>
+                    <p>Creating intuitive and engaging user interfaces for web and mobile applications.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Web Development</h3>
+                    <p>Building responsive, high-performance websites using modern technologies.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Brand Identity</h3>
+                    <p>Developing cohesive visual identities that tell your brand's unique story.</p>
+                </div>
+                <div class="service-item">
+                    <h3>Prototyping</h3>
+                    <p>Interactive prototypes to test and validate design concepts before development.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT TAB -->
+        <div id="contact-tab" class="tab-content">
+            <div class="contact-content">
+                <h2 class="tab-title">Let's <span>Talk</span></h2>
+                <p class="tab-subtitle">Have a project in mind? Let's create something amazing together.</p>
+                <a href="mailto:hello@ruverse.com" class="contact-btn">Get In Touch</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        /* =========================================
+           JAVASCRIPT LOGIC
+           ========================================= */
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 1. Custom Cursor Logic (User Provided Code) ---
+            const circleElement = document.querySelector('.circle');
+            
+            // Initialize mouse and circle positions to center of screen
+            const startX = window.innerWidth / 2;
+            const startY = window.innerHeight / 2;
+
+            const mouse = { x: startX, y: startY };
+            const previousMouse = { x: startX, y: startY };
+            const circle = { x: startX, y: startY };
+
+            let currentScale = 0;
+            let currentAngle = 0;
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            const speed = 0.17;
+
+            const tick = () => {
+                // MOVE
+                circle.x += (mouse.x - circle.x) * speed;
+                circle.y += (mouse.y - circle.y) * speed;
+                const translateTransform = `translate(${circle.x}px, ${circle.y}px)`;
+
+                // SQUEEZE
+                const deltaMouseX = mouse.x - previousMouse.x;
+                const deltaMouseY = mouse.y - previousMouse.y;
+                previousMouse.x = mouse.x;
+                previousMouse.y = mouse.y;
+                const mouseVelocity = Math.min(Math.sqrt(deltaMouseX**2 + deltaMouseY**2) * 4, 150); 
+                const scaleValue = (mouseVelocity / 150) * 0.5;
+                currentScale += (scaleValue - currentScale) * speed;
+                const scaleTransform = `scale(${1 + currentScale}, ${1 - currentScale})`;
+
+                // ROTATE
+                const angle = Math.atan2(deltaMouseY, deltaMouseX) * 180 / Math.PI;
+                if (mouseVelocity > 20) {
+                    currentAngle = angle;
+                }
+                const rotateTransform = `rotate(${currentAngle}deg)`;
+
+                circleElement.style.transform = `${translateTransform} ${rotateTransform} ${scaleTransform}`;
+
+                window.requestAnimationFrame(tick);
+            };
+            tick();
+
+            // Hover effects for cursor
+            const hoverElements = document.querySelectorAll('a, button, .project-card, .contact-widget, .work-card, .service-item');
+            hoverElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    circleElement.classList.add('hovered');
+                });
+                el.addEventListener('mouseleave', () => {
+                    circleElement.classList.remove('hovered');
+                });
+            });
+
+            // --- 2. Tab Switching Logic ---
+            const navLinks = document.querySelectorAll('.nav-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const bgText = document.getElementById('bgText');
+
+            window.switchTab = function(tabId) {
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.tab === tabId) {
+                        link.classList.add('active');
+                    }
+                });
+
+                // Switch tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === `${tabId}-tab`) {
+                        content.classList.add('active');
+                    }
+                });
+
+                // Adjust background text based on tab
+                if (tabId === 'home') {
+                    bgText.style.opacity = '1';
+                    bgText.style.transform = 'translate(-50%, -50%)';
+                } else {
+                    bgText.style.opacity = '0'; // Fade out background text on other tabs
+                }
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tabId = link.dataset.tab;
+                    switchTab(tabId);
+                });
+            });
+
+            // --- 3. Hero Parallax Effect (Only works on Home tab) ---
+            const backgroundText = document.querySelector('.background-text');
+            const heroImageContainer = document.querySelector('.hero-image-placeholder');
+            const projectCard = document.querySelector('.project-card');
+            const contactWidget = document.querySelector('.contact-widget');
+            const heroSection = document.querySelector('.hero-container');
+
+            heroSection.addEventListener('mousemove', (e) => {
+                // Only apply parallax if Home tab is active
+                if (!document.getElementById('home-tab').classList.contains('active')) return;
+
+                const x = (window.innerWidth / 2 - e.pageX) / 25;
+                const y = (window.innerHeight / 2 - e.pageY) / 25;
+
+                if (backgroundText) {
+                    backgroundText.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+                }
+                if (heroImageContainer) {
+                    heroImageContainer.style.transform = `translateX(calc(-50% + ${x * 0.5}px))`;
+                }
+                if (projectCard) {
+                    projectCard.style.transform = `translate(${x * -1.5}px, ${y * -1.5}px)`;
+                }
+                if (contactWidget) {
+                    contactWidget.style.transform = `translate(${x * -0.5}px, ${y * -0.5}px)`;
+                }
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                if (backgroundText) backgroundText.style.transform = 'translate(-50%, -50%)';
+                if (heroImageContainer) heroImageContainer.style.transform = 'translateX(-50%)';
+                if (projectCard) projectCard.style.transform = 'translate(0, 0)';
+                if (contactWidget) contactWidget.style.transform = 'translate(0, 0)';
+            });
+
+            // --- 4. Interactive Menu Toggle ---
+            const menuToggle = document.querySelector('.menu-toggle');
+            let isMenuOpen = false;
+
+            menuToggle.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                const spans = menuToggle.querySelectorAll('span');
+                
+                if (isMenuOpen) {
+                    spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                    spans[1].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                } else {
+                    spans[0].style.transform = 'none';
+                    spans[1].style.transform = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
