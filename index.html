@@ -216,6 +216,7 @@
             height: 100vh;
             min-height: 620px;
             padding: clamp(15px, 2.5vw, 40px);
+            padding-bottom: 0; /* FIX: Image touches the bottom edge */
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -311,14 +312,14 @@
             color: var(--text-muted);
         }
 
-        /* --- IMAGE CONTAINER: TOUCHING BOTTOM --- */
+        /* --- IMAGE CONTAINER: TOUCHING BOTTOM, NO FLOAT --- */
         .hero-image-placeholder {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: clamp(350px, 75vw, 1200px);
-            height: 95%;
+            height: 100%; /* FIX: Fills to the bottom */
             z-index: 6;
             display: flex;
             justify-content: center;
@@ -333,18 +334,13 @@
             object-fit: contain;
             object-position: bottom;
             filter: drop-shadow(0 0 40px rgba(255, 107, 0, 0.6)) drop-shadow(0 35px 70px rgba(0, 0, 0, 0.8));
-            animation: heroFloat 6s ease-in-out infinite;
+            /* Floating animation removed */
         }
 
         /* Thank You Specific Image Styling — Removes White Background */
         .thank-you-image {
             mix-blend-mode: multiply;
             filter: brightness(1.15) contrast(1.2) drop-shadow(0 0 30px rgba(255, 107, 0, 0.6)) !important;
-        }
-
-        @keyframes heroFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
         }
 
         .bottom-left {
@@ -1053,7 +1049,7 @@
             </div>
 
             <div class="hero-image-placeholder" id="heroImage">
-                <img src="https://i.postimg.cc/jj8xdfvM/Gemini-Generated-Image-mop4mqmop4mqmop4-removebg-preview.png" alt="Rudransh" class="hero-image">
+                <img src="https://i.postimg.cc/HnKmJSWn/Free-Sample-Vectorizer-io-Gemini-Generated-Image-mop4mqmop4mqmop4-removebg-preview-removebg-preview.png" alt="Rudransh" class="hero-image">
             </div>
 
             <div class="bottom-left">
@@ -1067,7 +1063,7 @@
                     <span style="color: var(--gold);">✺</span>
                 </div>
                 <div class="widget-body">
-                    <img src="https://i.postimg.cc/jj8xdfvM/Gemini-Generated-Image-mop4mqmop4mqmop4-removebg-preview.png" alt="Rudransh" class="avatar" style="object-position: top; width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold);">
+                    <img src="https://i.postimg.cc/HnKmJSWn/Free-Sample-Vectorizer-io-Gemini-Generated-Image-mop4mqmop4mqmop4-removebg-preview-removebg-preview.png" alt="Rudransh" class="avatar" style="object-position: top; width: 35px; height: 35px; border-radius: 50%; border: 1px solid var(--gold);">
                     <div class="widget-text">
                         <h4 style="font-size: 0.85rem; margin: 0;">Rudransh</h4>
                         <p style="font-size: 0.65rem; margin: 0; color: var(--text-muted);">Developer & Founder</p>
@@ -1261,26 +1257,11 @@
                 <p>THANK YOU FOR TAKING THE TIME TO EXPLORE MY WORK</p>
             </div>
 
-            <!-- Thank You Image with White Background Removed -->
             <div class="hero-image-placeholder" id="tyImage">
-                <img src="https://i.postimg.cc/gcvm718m/Free-Sample-Vectorizer-io-output-onlinepngtools.jpg" alt="Thank You" class="hero-image thank-you-image">
+                <img src="https://i.postimg.cc/Z5X9kcrd/Free-Sample-Vectorizer-io-output-onlinepngtools-removebg-preview.png" alt="Thank You" class="hero-image thank-you-image">
             </div>
 
-            <div class="contact-widget" id="tyWidget">
-                <div class="widget-header">
-                    <span>Contact Info</span>
-                    <span style="color: var(--gold);">✺</span>
-                </div>
-                <div class="widget-body">
-                    <div class="widget-text">
-                        <span class="label">Phone:</span>
-                        <span class="value">01176265052</span>
-                        <span class="value">01203216286</span>
-                        <span class="label" style="margin-top: 8px;">Email:</span>
-                        <span class="value">ahmedmahm3oud@gmail.com</span>
-                    </div>
-                </div>
-            </div>
+            <!-- Contact Widget Removed from here -->
         </div>
     </section>
 
@@ -1333,7 +1314,7 @@
             window.addEventListener('resize', autoScaleThankYouText);
             autoScaleThankYouText();
 
-            /* --- 3. Custom Cursor --- */
+            /* --- 3. Custom Cursor (Shake Effect) --- */
             const circleElement = document.querySelector('.circle');
             const startX = window.innerWidth / 2;
             const startY = window.innerHeight / 2;
@@ -1467,7 +1448,6 @@
             /* --- 9. Thank You Parallax --- */
             const tyBgText = document.getElementById('tyBgText');
             const tyImageContainer = document.querySelector('#tyImage');
-            const tyWidget = document.getElementById('tyWidget');
             const tySection = document.querySelector('.thank-you-container');
 
             tySection.addEventListener('mousemove', (e) => {
@@ -1476,13 +1456,11 @@
 
                 if (tyBgText) tyBgText.style.transform = `translate(calc(-50% + ${x * 0.6}px), calc(-50% + ${y * 0.6}px))`;
                 if (tyImageContainer) tyImageContainer.style.transform = `translateX(calc(-50% + ${x * 0.5}px))`;
-                if (tyWidget) tyWidget.style.transform = `translate(${x * -0.7}px, ${y * -0.7}px)`;
             });
 
             tySection.addEventListener('mouseleave', () => {
                 if (tyBgText) tyBgText.style.transform = 'translate(-50%, -50%)';
                 if (tyImageContainer) tyImageContainer.style.transform = 'translateX(-50%)';
-                if (tyWidget) tyWidget.style.transform = 'translate(0, 0)';
             });
 
             /* --- 10. Mobile menu toggle --- */
